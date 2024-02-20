@@ -1,0 +1,26 @@
+---
+- name: Change parallels downloads for pacman/yay
+  ansible.builtin.replace:
+    path: /etc/pacman.conf
+    regexp: "ParallelDownloads = 4"
+    replace: "ParallelDownloads = 6"
+  register: change_parallel_download
+
+- name: Update pacman repository
+  ansible.builtin.shell: "pacman -Syu --noconfirm"
+  register: pacman_update
+
+- name: Check if YAY already installed
+  command: yay --version
+  register: check_yay
+  ignore_errors: false
+
+- name: Get arch distro
+  set_fact:
+    arch_distro: "{{ lookup('ansible.builtin.file', ansible_facts['distribution_file_path']) }}"
+
+- name: Download and install YAY
+  ansible.builtin.shell: "pacman -S --needed git base-devel yay"
+  when: 
+    - arch_distro == "Manjaro Linux"
+    - check_yay is failed

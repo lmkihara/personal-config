@@ -1,0 +1,6 @@
+---
+- name: Playbook for initial configure
+  hosts: localhost
+  become: true
+  roles:
+    - bootstrap

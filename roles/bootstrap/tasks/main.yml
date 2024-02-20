@@ -1,0 +1,7 @@
+---
+- name: Install dependencies
+  import_tasks: bootstrap.yml
+
+#- name: Import desktop task
+#  import_tasks: desktop.yml
+#  tags: "desktop"

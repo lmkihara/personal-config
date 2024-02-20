@@ -1,0 +1,3 @@
+---
+- name: Install necessary packages for de GUI
+  pacman: 
